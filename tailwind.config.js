@@ -13,7 +13,8 @@ module.exports = {
         purple: '#9038FF',
         pink: '#D71CDB',
         red: '#EB5757',
-        green: '#27AE60'
+        green: '#27AE60',
+        'grey-4': '#828282'
       },
       fontFamily: {
         quicksand: ['Quicksand', 'sans'],
