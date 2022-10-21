@@ -1,11 +1,17 @@
 import React from 'react';
 
-const Input = ({ className, type, ...props }) => (
-  <input
-    className={`${className} rounded-2xl h-11 p-5`}
-    type={type}
-    {...props}
-  />
+const Input = ({ className, prefix, suffix, type, ...props }) => (
+  <div className={`${className} relative`}>
+    {prefix && <div className="absolute top-1/4 pl-5">{prefix}</div>}
+    <input
+      className={`rounded-2xl h-11 px-5 w-full ${prefix && `pl-14`} ${
+        suffix && `pr-14`
+      }`}
+      type={type}
+      {...props}
+    />
+    {suffix && <div className="absolute top-1/4 right-0 pr-5">{suffix}</div>}
+  </div>
 );
 
 export default Input;
