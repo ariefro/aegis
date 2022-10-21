@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&family=Rubik:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .heading-l {
+    @apply font-rubik font-medium text-2xl;
+  }
+
+  .heading-m {
+    @apply font-rubik font-medium text-lg;
+  }
+
+  .body-l {
+    @apply font-quicksand font-semibold text-2xl;
+  }
+
+  .body-m {
+    @apply font-quicksand font-medium text-base;
+  }
+
+  .body-s {
+    @apply font-quicksand font-medium text-[13px];
+  }
+
+  .body-helper {
+    @apply font-quicksand font-medium text-[10px];
+  }
+}
