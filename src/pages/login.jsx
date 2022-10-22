@@ -28,13 +28,13 @@ const Login = () => {
         <form className="mt-9">
           <Input
             className="w-80 mb-3 mx-auto"
-            placeHolder="Username"
+            placeholder="Username"
             type="text"
             prefix={<Icon.ProfileOutlined />}
           />
           <Input
             className="w-80 mx-auto"
-            placeHolder="Password"
+            placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={
               <buton

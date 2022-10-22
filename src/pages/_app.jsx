@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import { Provider } from 'react-redux';
 import { useEffect, useState } from 'react';
 import store from '../store';
-import WarningPage from '../components';
+import { WarningPage } from '../components';
 
 const MyApp = ({ Component, pageProps }) => {
   const [width, setWidth] = useState(0);

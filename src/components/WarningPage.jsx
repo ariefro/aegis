@@ -1,5 +1,3 @@
-import React from 'react';
-
 const WarningPage = () => (
   <div>
     This app can only be see through mobile phone, please use your phone or
