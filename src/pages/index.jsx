@@ -1,12 +1,19 @@
-const Home = () => (
-  <div>
-    <h1 className="heading-l text-purple">Hello World!</h1>
-    <h1 className="heading-m text-dark-purple-1">Hello World!</h1>
-    <h1 className="body-l text-dark-purple-2">Hello World!</h1>
-    <h1 className="body-m text-dark-purple-3">Hello World!</h1>
-    <h1 className="body-s text-red">Hello World!</h1>
-    <h1 className="body-helper text-green">Hello World!</h1>
-  </div>
-);
+import { useRouter } from 'next/router';
+
+const Home = () => {
+  const router = useRouter();
+  // const handleLogout = () => {
+  //   Cookies.remove('test');
+  //   router.push('/login');
+  // };
+  return (
+    <div>
+      <h1 className="heading-l">You are loged in</h1>
+      <button type="button" onClick={() => handleLogout()}>
+        Logout
+      </button>
+    </div>
+  );
+};
 
 export default Home;
