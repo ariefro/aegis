@@ -2,9 +2,9 @@ import '../styles/globals.css';
 import { Provider } from 'react-redux';
 import { useEffect, useState } from 'react';
 import store from '../store';
-import WarningPage from '../components';
+import { WarningPage } from '../components';
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
@@ -24,6 +24,6 @@ function MyApp({ Component, pageProps }) {
       {width <= 600 ? <Component {...pageProps} /> : <WarningPage />}
     </Provider>
   );
-}
+};
 
 export default MyApp;
