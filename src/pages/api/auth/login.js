@@ -7,7 +7,7 @@ export default async (req, res) => {
     const token =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTUxNjIzOTAyMn0.7pdDOjbISbfYZryCd1hFW7yvEh5MnS9LlICHEETXrds';
     const serialized = serialize('token', token, {
-      https: true,
+      httpOnly: true,
       path: '/'
     });
 
