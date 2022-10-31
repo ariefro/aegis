@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import axios from 'axios';
 import { Button, Icon, Input } from '../components';
 import useAxios from '../components/hooks/useAxios';
 
