@@ -1,45 +1,65 @@
-import axios from 'axios';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-import { Button, Icon, Input } from '../components';
 
-const Login = () => {
+import { Button, Icon, Input } from '../components';
+import useAxios from '../components/hooks/useAxios';
+
+const Register = () => {
   const router = useRouter();
 
+  const [email, setEmail] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isCredentialValid, setIsCredentialValid] = useState(true);
+  const [isFormValid, setIsFormValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
-    try {
-      await axios.post('/api/auth/login', {
-        username,
-        password
-      });
+    // try {
+    //   setIsLoading(true);
+    //   const regietered = useAxios({
+    //     method: 'post',
+    //     url: '',
+    //     body: {
+    //       username,
+    //       email,
+    //       password
+    //     },
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       Authorizarion: `Bearer {token}`
+    //     }
+    //   });
 
-      router.push('/');
-    } catch (error) {
-      setUsername('');
-      setPassword('');
-      setIsCredentialValid(false);
-    }
-    setIsLoading(false);
+    //   if(registered) {
+    //     useAxios({method: "post", url: "", body: {
+    //       username, password
+    //     }, headers: })
+    //   }
+
+    //   setIsLoading(false);
+    //   router.push('/login');
+    // } catch (error) {
+    //   setUsername('');
+    //   setPassword('');
+    //   setEmail('');
+    // }
   };
 
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="text-center">
         <h1 className="heading-l text-dark-purple-1">
-          Welcom to
+          Immediately feel the
           <br />
-          Lakoste Wallet
+          ease of transacting just
+          <br />
+          by registering
         </h1>
-        <p className=" body-s mt-16 text-grey-4 mb-6">Sign in with</p>
+        <p className=" body-s mt-16 text-grey-4 mb-6">Sign up with</p>
         <Button className="bg-white mr-5" disabled>
           <div className="flex">
             <Icon.Google className="mr-1" />
@@ -62,6 +82,14 @@ const Login = () => {
             prefix={<Icon.ProfileOutlined />}
           />
           <Input
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="w-80 mb-3 mx-auto"
+            placeholder="Email"
+            type="email"
+            prefix={<Icon.EmailOutlined />}
+          />
+          <Input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             className="w-80 mx-auto"
@@ -78,26 +106,23 @@ const Login = () => {
             }
             type={isShowPassword ? 'text' : 'password'}
           />
-          <p
-            className="body-s mt-2 text-red"
-            hidden={isCredentialValid && true}
-          >
-            Username or Password is incorrect
+          <p className="body-s mt-2 text-red" hidden={isFormValid && true}>
+            {message}
           </p>
           <Button
             className="bg-dark-purple-2 text-white mt-14 w-48"
             type="submit"
-            disabled={!username || !password || isLoading}
+            disabled={!username || !email || !password || isLoading}
           >
             <span className="font-quicksand font-semibold text-md">
-              {isLoading ? 'Loading' : 'Login'}
+              {isLoading ? 'Loading' : 'Register'}
             </span>
           </Button>
         </form>
         <p className="body-s text-grey-4 mt-3">
-          Don&apos;t have an account yet?{' '}
+          You have account?{' '}
           <span className="text-blue-700">
-            <Link href="/register">Register</Link>
+            <Link href="/login">Login</Link>
           </span>
         </p>
       </div>
@@ -105,4 +130,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

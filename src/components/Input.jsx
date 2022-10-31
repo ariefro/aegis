@@ -4,9 +4,9 @@ const Input = ({ className, prefix, suffix, type, ...props }) => (
   <div className={`${className} relative`}>
     {prefix && <div className="absolute top-1/4 pl-5">{prefix}</div>}
     <input
-      className={`rounded-2xl h-11 px-5 w-full ${prefix && `pl-14`} ${
-        suffix && `pr-14`
-      }`}
+      className={`rounded-2xl h-11 px-5 w-full outline-dark-purple-3 ${
+        prefix && `pl-14`
+      } ${suffix && `pr-14`}`}
       type={type}
       {...props}
     />
