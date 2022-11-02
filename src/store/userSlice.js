@@ -1,16 +1,39 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const baseUrl = process.env.NEXT_PUBLIC_AEGIS_STAGE_API;
 const initialState = {
   loading: false,
-  error: '',
   response: ''
 };
 
-export const authenticate = createAsyncThunk('user/authenticate', (data) =>
-  axios.post('/api/auth/login', data, {
-    headers: { 'Content-Type': 'application/json' }
-  })
+export const authenticate = createAsyncThunk(
+  'user/authenticate',
+  async (body, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/api/auth/login', body, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
+export const register = createAsyncThunk(
+  'user/register',
+  async (body, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${baseUrl}/api/register`, body, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
+    }
+  }
 );
 
 const userSlice = createSlice({
@@ -22,13 +45,23 @@ const userSlice = createSlice({
     });
     builder.addCase(authenticate.fulfilled, (state, action) => {
       state.loading = false;
-      state.error = '';
       state.response = action.payload;
     });
-    builder.addCase(authenticate.rejected, (state, action) => {
+    builder.addCase(authenticate.rejected, (state) => {
+      state.loading = false;
+      state.response = '';
+    });
+
+    builder.addCase(register.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(register.fulfilled, (state, action) => {
       state.loading = false;
       state.response = action.payload;
-      state.error = action.error;
+    });
+    builder.addCase(register.rejected, (state) => {
+      state.loading = false;
+      state.response = '';
     });
   }
 });
