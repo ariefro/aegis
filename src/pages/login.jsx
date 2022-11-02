@@ -1,8 +1,9 @@
 // import axios from 'axios';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Button, Icon, Input } from '../components';
 import { authenticate } from '../store/userSlice';
 
@@ -10,13 +11,11 @@ const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.user.loading);
-  const error = useSelector((state) => state.user.error);
 
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const [isCredentialValid, setIsCredentialValid] = useState(true);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +23,7 @@ const Login = () => {
       await dispatch(authenticate({ username, password })).unwrap();
       router.push('/');
     } catch (err) {
+      setError(err);
       setUsername('');
       setPassword('');
     }
@@ -77,7 +77,7 @@ const Login = () => {
             type={isShowPassword ? 'text' : 'password'}
           />
           <p className="body-s mt-2 text-red" hidden={!error && true}>
-            Username or Password is incorrect
+            {error}
           </p>
           <Button
             className="bg-dark-purple-2 text-white mt-14 w-48"

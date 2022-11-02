@@ -1,53 +1,30 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 
-import axios from 'axios';
 import { Button, Icon, Input } from '../components';
-import useAxios from '../components/hooks/useAxios';
+import { register } from '../store/userSlice';
 
 const Register = () => {
-  const router = useRouter();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.user.loading);
 
   const [email, setEmail] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isFormValid, setIsFormValid] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   setIsLoading(true);
-    //   const regietered = useAxios({
-    //     method: 'post',
-    //     url: '',
-    //     body: {
-    //       username,
-    //       email,
-    //       password
-    //     },
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorizarion: `Bearer {token}`
-    //     }
-    //   });
-
-    //   if(registered) {
-    //     useAxios({method: "post", url: "", body: {
-    //       username, password
-    //     }, headers: })
-    //   }
-
-    //   setIsLoading(false);
-    //   router.push('/login');
-    // } catch (error) {
-    //   setUsername('');
-    //   setPassword('');
-    //   setEmail('');
-    // }
+    try {
+      await dispatch(register({ email, username, password })).unwrap();
+    } catch (err) {
+      setError(err.message);
+      setUsername('');
+      setPassword('');
+      setEmail('');
+    }
   };
 
   return (
@@ -107,8 +84,8 @@ const Register = () => {
             }
             type={isShowPassword ? 'text' : 'password'}
           />
-          <p className="body-s mt-2 text-red" hidden={isFormValid && true}>
-            {message}
+          <p className="body-s mt-2 text-red" hidden={!error && true}>
+            {error}
           </p>
           <Button
             className="bg-dark-purple-2 text-white mt-14 w-48"
