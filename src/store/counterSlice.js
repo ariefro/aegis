@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 // Example for setup slice
 
 import { createSlice } from '@reduxjs/toolkit';

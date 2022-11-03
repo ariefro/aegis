@@ -1,17 +1,15 @@
-// import axios from 'axios';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Icon, Input } from '../components';
-import { authenticate } from '../store/userSlice';
+import { register } from '../store/userSlice';
 
-const Login = () => {
-  const router = useRouter();
+const Register = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.user.loading);
 
+  const [email, setEmail] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -20,12 +18,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(authenticate({ username, password })).unwrap();
-      router.push('/');
+      await dispatch(register({ email, username, password })).unwrap();
     } catch (err) {
-      setError(err);
+      setError(err.message);
       setUsername('');
       setPassword('');
+      setEmail('');
     }
   };
 
@@ -33,11 +31,13 @@ const Login = () => {
     <div className="flex h-screen items-center justify-center">
       <div className="text-center">
         <h1 className="heading-l text-dark-purple-1">
-          Welcom to
+          Immediately feel the
           <br />
-          Lakoste Wallet
+          ease of transacting just
+          <br />
+          by registering
         </h1>
-        <p className=" body-s mt-16 text-grey-4 mb-6">Sign in with</p>
+        <p className=" body-s mt-16 text-grey-4 mb-6">Sign up with</p>
         <Button className="bg-white mr-5" disabled>
           <div className="flex">
             <Icon.Google className="mr-1" />
@@ -58,6 +58,14 @@ const Login = () => {
             placeholder="Username"
             type="text"
             prefix={<Icon.ProfileOutlined />}
+          />
+          <Input
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="w-80 mb-3 mx-auto"
+            placeholder="Email"
+            type="email"
+            prefix={<Icon.EmailOutlined />}
           />
           <Input
             onChange={(e) => setPassword(e.target.value)}
@@ -82,17 +90,17 @@ const Login = () => {
           <Button
             className="bg-dark-purple-2 text-white mt-14 w-48"
             type="submit"
-            disabled={!username || !password || isLoading}
+            disabled={!username || !email || !password || isLoading}
           >
             <span className="font-quicksand font-semibold text-md">
-              {isLoading ? 'Loading' : 'Login'}
+              {isLoading ? 'Loading' : 'Register'}
             </span>
           </Button>
         </form>
         <p className="body-s text-grey-4 mt-3">
-          Don&apos;t have an account yet?{' '}
+          You have account?{' '}
           <span className="text-blue-700">
-            <Link href="/register">Register</Link>
+            <Link href="/login">Login</Link>
           </span>
         </p>
       </div>
@@ -100,4 +108,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
