@@ -1,21 +1,19 @@
-import axios from 'axios';
-import { useRouter } from 'next/router';
+import { Layout, Hero } from '../components';
 
-const Home = () => {
-  const router = useRouter();
-  const handleLogout = async () => {
-    await axios.post('api/auth/logout');
-
-    router.push('/login');
-  };
-  return (
-    <div>
-      <h1 className="heading-l">You are loged in</h1>
-      <button type="button" onClick={() => handleLogout()}>
-        Logout
+const Home = () => (
+  <div>
+    <Hero />
+    <div className="flex items-center justify-between pt-8">
+      <p className="heading-m text-dark-purple-1">Last Transaction</p>
+      <button type="button" className="body-s text-grey-4">
+        View all
       </button>
     </div>
-  );
+  </div>
+);
+
+Home.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
 };
 
 export default Home;

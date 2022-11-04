@@ -70,7 +70,7 @@ const Login = () => {
                 onClick={() => setIsShowPassword((prevState) => !prevState)}
               >
                 <Icon.Hidden
-                  className={`${!isShowPassword && `stroke-blue-400`}`}
+                  className={`${!isShowPassword && `fill-blue-400`}`}
                 />
               </buton>
             }
