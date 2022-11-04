@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import { Provider } from 'react-redux';
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import store from '../store';
 import { WarningPage } from '../components';
 
@@ -22,6 +23,12 @@ const MyApp = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page);
   return (
     <Provider store={store}>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+      </Head>
       {width <= 600 ? getLayout(<Component {...pageProps} />) : <WarningPage />}
     </Provider>
   );

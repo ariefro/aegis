@@ -18,10 +18,6 @@ export default function Document() {
           content="black-translucent"
         />
         <meta name="msapplication-starturl" content="/" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
       </Head>
       <body>
         <Main />
