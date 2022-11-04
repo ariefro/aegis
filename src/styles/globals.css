@@ -28,6 +28,10 @@
   .body-helper {
     @apply font-quicksand font-medium text-[10px];
   }
+
+  .menu {
+    @apply w-12 h-12 rounded-2xl flex items-center justify-center border bg-white shadow-md active:bg-slate-100
+  }
 }
 
 body {
