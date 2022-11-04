@@ -19,9 +19,10 @@ const MyApp = ({ Component, pageProps }) => {
     };
   }, []);
 
+  const getLayout = Component.getLayout || ((page) => page);
   return (
     <Provider store={store}>
-      {width <= 600 ? <Component {...pageProps} /> : <WarningPage />}
+      {width <= 600 ? getLayout(<Component {...pageProps} />) : <WarningPage />}
     </Provider>
   );
 };
