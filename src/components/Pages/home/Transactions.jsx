@@ -32,7 +32,9 @@ const Transactions = () => (
             </div>
           </div>
           <div>
-            <p>{maskToIdr(t.amount)}</p>
+            <p className={t.amount < 0 ? 'text-red' : 'text-green'}>
+              {maskToIdr(t.amount)}
+            </p>
           </div>
         </div>
       ))
