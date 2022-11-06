@@ -18,7 +18,7 @@ const iconMap = (type) => {
 
 const Transactions = ({ transactions }) => (
   <div className="pb-28 overflow-auto absolute bottom-0 top-[419.5px] right-8 left-8">
-    {transactions.length ? (
+    {transactions?.length ? (
       transactions.map((t) => (
         <div key={t.id} className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-4">
