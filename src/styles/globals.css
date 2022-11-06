@@ -34,6 +34,14 @@
   }
 }
 
+*{
+  -webkit-tap-highlight-color: transparent;
+}
+
+input, button, textarea, select, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   background-color: rgb(241, 241, 241);
 }

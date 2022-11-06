@@ -8,7 +8,7 @@ const BackLayout = ({ children, icon, label, onClick }) => {
     <>
       <header>
         <button type="button" onClick={() => router.push('/')}>
-          <Icon.BackArrowCircle className="w-9 h-9 stroke-dark-purple-2" />
+          <Icon.BackArrowCircle className="w-9 h-9 stroke-dark-purple-2 active:bg-slate-300" />
         </button>
       </header>
       {children}
@@ -19,7 +19,7 @@ const BackLayout = ({ children, icon, label, onClick }) => {
             type="button"
             onClick={onClick}
           >
-            <div className="border border-dark-purple-2 rounded-full h-16 w-16 flex justify-center items-center my-3">
+            <div className="border border-dark-purple-2 rounded-full h-16 w-16 flex justify-center items-center my-3 active:bg-slate-300">
               {icon}
             </div>
             <p className="heading-m text-dark-purple-2">{label}</p>
