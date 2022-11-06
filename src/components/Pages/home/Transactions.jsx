@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { transactions } from '../../../../dummy.json';
 import { maskToIdr } from '../../../utils/parser';
 import Icon from '../../Icon';
 
@@ -17,7 +16,7 @@ const iconMap = (type) => {
   );
 };
 
-const Transactions = () => (
+const Transactions = ({ transactions }) => (
   <div className="pb-28 overflow-auto absolute bottom-0 top-[419.5px] right-8 left-8">
     {transactions.length ? (
       transactions.map((t) => (
