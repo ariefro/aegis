@@ -14,7 +14,7 @@ Setting.getLayout = function getLayout(page) {
   const handleLogout = async () => {
     await axios.post('api/auth/logout');
 
-    router.push('/login');
+    router.replace('/login');
   };
   return (
     <Layout
