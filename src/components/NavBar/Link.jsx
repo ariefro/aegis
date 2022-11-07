@@ -1,21 +1,27 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Children, cloneElement } from 'react';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-const Link = ({ children, href, ...props }) => {
-  const { pathname } = useRouter();
+const Link = ({ children, href, pushRoute, ...props }) => {
+  const { pathname, push, replace } = useRouter();
   const child = Children.only(children);
   const className = `w-8 h-8 ${
     href === pathname
       ? 'transition ease-in-out stroke-dark-purple-1 fill-white scale-125'
       : 'stroke-white'
   }`;
+  const handleChangePage = (e) => {
+    e.preventDefault();
+    if (pushRoute) {
+      push(href);
+    } else {
+      replace(href);
+    }
+  };
 
   return (
-    <NextLink href={href} legacyBehavior {...props}>
-      <a>{cloneElement(child, { className: className || null })}</a>
-    </NextLink>
+    <a href={href} onClick={(e) => handleChangePage(e)} {...props}>
+      {cloneElement(child, { className: className || null })}
+    </a>
   );
 };
 
