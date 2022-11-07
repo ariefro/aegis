@@ -1,5 +1,5 @@
 // import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,13 +21,17 @@ const Login = () => {
     e.preventDefault();
     try {
       await dispatch(authenticate({ username, password })).unwrap();
-      router.push('/');
+      router.replace('/home');
     } catch (err) {
       setError(err);
       setUsername('');
       setPassword('');
     }
   };
+
+  useEffect(() => {
+    router.prefetch('/dashboard');
+  }, []);
 
   return (
     <div className="flex h-screen items-center justify-center">

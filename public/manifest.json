@@ -2,8 +2,8 @@
   "theme_color": "#5B259F",
   "background_color": "#eee",
   "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
+  "scope": "/login",
+  "start_url": "/login",
   "name": "Lakoste Wallet",
   "short_name": "Lakoste",
   "icons": [

@@ -7,7 +7,7 @@ const BackLayout = ({ children, icon, label, onClick }) => {
   return (
     <>
       <header>
-        <button type="button" onClick={() => router.push('/')}>
+        <button type="button" onClick={() => router.replace('/home')}>
           <Icon.BackArrowCircle className="w-9 h-9 stroke-dark-purple-2 active:bg-slate-300" />
         </button>
       </header>
