@@ -10,7 +10,7 @@ const BackLayout = ({ children, icon, label, onClick }) => {
         <button
           className="active:bg-slate-300 w-9 h-9 rounded-full"
           type="button"
-          onClick={() => router.replace('/home')}
+          onClick={() => router.back()}
         >
           <Icon.BackArrowCircle className="w-9 h-9 stroke-dark-purple-2" />
         </button>
