@@ -17,11 +17,7 @@ export default function Document() {
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        <meta name="msapplication-starturl" content="/" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
+        <meta name="msapplication-starturl" content="/login" />
       </Head>
       <body>
         <Main />
