@@ -54,7 +54,7 @@ const Register = () => {
           <Input
             onChange={(e) => setUsername(e.target.value)}
             value={username}
-            className="w-80 mb-3 mx-auto"
+            className="mb-3 mx-auto"
             placeholder="Username"
             type="text"
             prefix={<Icon.ProfileOutlined />}
@@ -62,7 +62,7 @@ const Register = () => {
           <Input
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            className="w-80 mb-3 mx-auto"
+            className="mb-3 mx-auto"
             placeholder="Email"
             type="email"
             prefix={<Icon.EmailOutlined />}
@@ -70,7 +70,7 @@ const Register = () => {
           <Input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            className="w-80 mx-auto"
+            className="mx-auto"
             placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={

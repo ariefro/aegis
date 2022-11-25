@@ -2,10 +2,10 @@ import { Children, cloneElement } from 'react';
 import { useRouter } from 'next/router';
 
 const Link = ({ children, href, pushRoute, ...props }) => {
-  const { pathname, push, replace } = useRouter();
+  const { pathname, push, replace, query } = useRouter();
   const child = Children.only(children);
   const className = `w-8 h-8 ${
-    href === pathname
+    pathname.includes(href)
       ? 'transition ease-in-out stroke-dark-purple-1 fill-white scale-125'
       : 'stroke-white'
   }`;
@@ -14,7 +14,7 @@ const Link = ({ children, href, pushRoute, ...props }) => {
     if (pushRoute) {
       push(href);
     } else {
-      replace(href);
+      replace(`${href}/${query.id}`);
     }
   };
 

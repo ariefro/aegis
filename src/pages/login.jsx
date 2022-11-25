@@ -20,8 +20,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(authenticate({ username, password })).unwrap();
-      router.replace('/home');
+      const res = await dispatch(authenticate({ username, password })).unwrap();
+      router.replace(`/home/${res.wallet_id}`);
     } catch (err) {
       setError(err);
       setUsername('');
@@ -30,7 +30,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    router.prefetch('/dashboard');
+    router.prefetch('/home/[id]');
   }, []);
 
   return (
@@ -58,7 +58,7 @@ const Login = () => {
           <Input
             onChange={(e) => setUsername(e.target.value)}
             value={username}
-            className="w-80 mb-3 mx-auto"
+            className="mb-3 mx-auto"
             placeholder="Username"
             type="text"
             prefix={<Icon.ProfileOutlined />}
@@ -66,7 +66,7 @@ const Login = () => {
           <Input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            className="w-80 mx-auto"
+            className="mx-auto"
             placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={

@@ -6,7 +6,7 @@ const Navigation = ({ ...props }) => (
     className="flex items-center justify-evenly bg-dark-purple-1 rounded-[32px] py-7 shadow-lg shadow-gray-400"
     {...props}
   >
-    <Link href="/home" legacyBehavior>
+    <Link href="/home">
       <Icon.WalletOutlined />
     </Link>
     <Link href="/stats">
