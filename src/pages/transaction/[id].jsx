@@ -5,7 +5,8 @@ import { Button, Dial, Input, Layout, Select } from '../../components';
 import {
   setTransactionAmount,
   setTransactionTarget,
-  setTransactionType
+  setTransactionType,
+  setTransactionName
 } from '../../store/transactionSlice';
 import { maskToIdr, toArrayOption } from '../../utils/parser';
 
@@ -54,13 +55,21 @@ const Create = () => {
     }
   };
 
+  const handleChangeName = (value) => {
+    dispatch(setTransactionName(value));
+  };
+
   return (
     <div>
       <p className="text-dark-purple-1 font-rubik font-medium text-3xl text-center mt-12 break-all">
         {maskToIdr(transaction.amount)}
       </p>
       <div className="pt-11">
-        <Input className="mb-3 text-center" placeholder="Name" />
+        <Input
+          className="mb-3 text-center"
+          placeholder="Name"
+          onChange={(e) => handleChangeName(e.target.value)}
+        />
         <div className="flex justify-center">
           {query.type === 'transfer' && (
             <Select

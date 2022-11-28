@@ -1,12 +1,31 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import request from '../utils/apiRequest';
 
 const initialState = {
   wallet_id: 0,
   amount: 0,
   type: 'transfer',
   slug: 'transfer',
-  to_wallet_id: null
+  to_wallet_id: null,
+  name: ''
 };
+
+export const createTransaction = createAsyncThunk(
+  'transaction/create',
+  async (req, { rejectWithValue }) => {
+    try {
+      const res = request({
+        method: 'POST',
+        url: '/api/something',
+        data: req
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
 const transactionSlice = createSlice({
   name: 'transaction',
   initialState,
@@ -21,6 +40,9 @@ const transactionSlice = createSlice({
     },
     setTransactionTarget: (state, action) => {
       state.to_wallet_id = action.payload;
+    },
+    setTransactionName: (state, action) => {
+      state.name = action.payload;
     }
   }
 });
@@ -28,6 +50,7 @@ const transactionSlice = createSlice({
 export const {
   setTransactionType,
   setTransactionAmount,
-  setTransactionTarget
+  setTransactionTarget,
+  setTransactionName
 } = transactionSlice.actions;
 export default transactionSlice.reducer;

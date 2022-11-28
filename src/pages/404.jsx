@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 const Custom404 = () => {
   const { replace } = useRouter();
   useEffect(() => {
-    setTimeout(() => replace('/home'), 3000);
+    setTimeout(() => replace('/home/0'), 3000);
   }, []);
   return (
     <div className="flex flex-col justify-center items-center h-screen">

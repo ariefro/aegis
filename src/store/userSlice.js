@@ -9,9 +9,9 @@ const initialState = {
 
 export const authenticate = createAsyncThunk(
   'user/authenticate',
-  async (body, { rejectWithValue }) => {
+  async (req, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post('/api/auth/login', body, {
+      const { data } = await axios.post('/api/auth/login', req, {
         headers: { 'Content-Type': 'application/json' }
       });
       return data;
@@ -23,9 +23,9 @@ export const authenticate = createAsyncThunk(
 
 export const register = createAsyncThunk(
   'user/register',
-  async (body, { rejectWithValue }) => {
+  async (req, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(`${baseUrl}/api/register`, body, {
+      const { data } = await axios.post(`${baseUrl}/api/register`, req, {
         headers: { 'Content-Type': 'application/json' }
       });
 

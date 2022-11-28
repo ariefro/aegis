@@ -12,7 +12,7 @@ export default async (req, res) => {
     });
 
     res.setHeader('Set-Cookie', serialized);
-    res.status(200).json({ message: 'Success!', wallet_id: 120 });
+    res.status(200).json({ message: 'Success!', wallet_id: 0 });
   } else {
     res.status(401).json({ message: 'Invalid credentials' });
   }
