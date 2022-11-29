@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import request from '../utils/apiRequest';
 
 const baseUrl = process.env.NEXT_PUBLIC_AEGIS_STAGE_API;
 const initialState = {
@@ -9,14 +10,16 @@ const initialState = {
 
 export const authenticate = createAsyncThunk(
   'user/authenticate',
-  async (req, { rejectWithValue }) => {
+  async (req) => {
     try {
-      const { data } = await axios.post('/api/auth/login', req, {
-        headers: { 'Content-Type': 'application/json' }
+      const res = await request({
+        method: 'POST',
+        url: '/api/login',
+        data: req
       });
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response.data.message);
+      return res.data;
+    } catch (error) {
+      return error.response.data;
     }
   }
 );
