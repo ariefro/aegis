@@ -12,7 +12,8 @@ const request = async ({ method, url, config, ...props }) => {
         headers: {
           'Content-Type': 'application/json',
           ...config
-        }
+        },
+        withCredentials: true
       });
       break;
     case 'POST':
@@ -25,7 +26,8 @@ const request = async ({ method, url, config, ...props }) => {
           headers: {
             'Content-Type': 'application/json',
             ...config
-          }
+          },
+          withCredentials: true
         }
       );
       break;

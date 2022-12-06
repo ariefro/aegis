@@ -10,6 +10,20 @@ const initialState = {
   name: ''
 };
 
+export const getWallets = createAsyncThunk(
+  'transaction/getWallet',
+  async () => {
+    try {
+      const res = await request({
+        method: 'GET',
+        url: '/api/wallets'
+      });
+      return res.data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
 export const createTransaction = createAsyncThunk(
   'transaction/create',
   async (req, { rejectWithValue }) => {

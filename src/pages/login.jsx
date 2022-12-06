@@ -1,16 +1,16 @@
-// import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
+import toast from 'react-hot-toast';
 import { Button, Icon, Input } from '../components';
 import { authenticate } from '../store/userSlice';
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { loading, response } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.user);
 
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [username, setUsername] = useState('');
@@ -22,6 +22,7 @@ const Login = () => {
     if (res.code === 200) {
       router.replace(`/home/${res.id}`);
     } else {
+      toast.error(res.message);
       setUsername('');
       setPassword('');
     }
@@ -78,12 +79,6 @@ const Login = () => {
             }
             type={isShowPassword ? 'text' : 'password'}
           />
-          <p
-            className="body-s mt-2 text-red"
-            hidden={response.code === 200 && true}
-          >
-            {response && response.code !== 200 && response.message}
-          </p>
           <Button
             className="bg-dark-purple-2 text-white mt-14 w-48"
             type="submit"

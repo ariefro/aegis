@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import { Provider } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { Toaster } from 'react-hot-toast';
 import store from '../store';
 import { WarningPage } from '../components';
 
@@ -29,7 +30,16 @@ const MyApp = ({ Component, pageProps }) => {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
       </Head>
-      {width <= 600 ? getLayout(<Component {...pageProps} />) : <WarningPage />}
+      {width <= 600 ? (
+        getLayout(
+          <>
+            <Component {...pageProps} />
+            <Toaster />
+          </>
+        )
+      ) : (
+        <WarningPage />
+      )}
     </Provider>
   );
 };
