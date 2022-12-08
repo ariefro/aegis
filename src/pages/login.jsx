@@ -19,10 +19,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await dispatch(authenticate({ username, password })).unwrap();
-    if (res.code === 200) {
-      router.replace(`/home/${res.id}`);
+    if (res.status === 200) {
+      router.replace(`/home/${res.data.data.id}`);
+      toast.success('Welcome!');
     } else {
-      toast.error(res.message);
+      toast.error(res.data.message);
       setUsername('');
       setPassword('');
     }

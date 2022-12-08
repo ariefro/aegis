@@ -9,13 +9,15 @@ const Custom404 = () => {
 
   const userWallet = async () => {
     const res = await dispatch(getWallets()).unwrap();
-    return res;
+    if (res.status === 200 && res.data) {
+      setTimeout(() => replace(`/home/${res.data.data[0].id}`), 3000);
+    } else {
+      setTimeout(() => replace('/login'), 3000);
+    }
   };
 
   useEffect(() => {
-    const wallets = userWallet();
-    console.log(wallets);
-    // setTimeout(() => replace('/home/0'), 3000);
+    userWallet();
   }, []);
   return (
     <div className="flex flex-col justify-center items-center h-screen">

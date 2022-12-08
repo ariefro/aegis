@@ -14,9 +14,10 @@ export const authenticate = createAsyncThunk(
         url: '/api/login',
         data: req
       });
-      return res.data;
+
+      return res;
     } catch (err) {
-      return err.response.data;
+      return err.response;
     }
   }
 );

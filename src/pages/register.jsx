@@ -23,7 +23,7 @@ const Register = () => {
       register({ email, username, password })
     ).unwrap();
     if (res.code === 200) {
-      toast.success('Register success, please login');
+      toast.success('You are registered!');
       push('/login');
     } else {
       toast.error(res.message);
