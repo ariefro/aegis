@@ -1,10 +1,23 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getWallets } from '../store/transactionSlice';
 
 const Custom404 = () => {
   const { replace } = useRouter();
+  const dispatch = useDispatch();
+
+  const userWallet = async () => {
+    const res = await dispatch(getWallets()).unwrap();
+    if (res.status === 200 && res.data) {
+      setTimeout(() => replace(`/home/${res.data.data[0].id}`), 3000);
+    } else {
+      setTimeout(() => replace('/login'), 3000);
+    }
+  };
+
   useEffect(() => {
-    setTimeout(() => replace('/home'), 3000);
+    userWallet();
   }, []);
   return (
     <div className="flex flex-col justify-center items-center h-screen">

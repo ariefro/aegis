@@ -2,25 +2,31 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
 import { Button, Icon, Input } from '../components';
 import { register } from '../store/userSlice';
 
 const Register = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.user.loading);
+  const { push } = useRouter();
 
   const [email, setEmail] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await dispatch(register({ email, username, password })).unwrap();
-    } catch (err) {
-      setError(err.message);
+    const res = await dispatch(
+      register({ email, username, password })
+    ).unwrap();
+    if (res.code === 200) {
+      toast.success('You are registered!');
+      push('/login');
+    } else {
+      toast.error(res.message);
       setUsername('');
       setPassword('');
       setEmail('');
@@ -54,7 +60,7 @@ const Register = () => {
           <Input
             onChange={(e) => setUsername(e.target.value)}
             value={username}
-            className="w-80 mb-3 mx-auto"
+            className="mb-3 mx-auto"
             placeholder="Username"
             type="text"
             prefix={<Icon.ProfileOutlined />}
@@ -62,7 +68,7 @@ const Register = () => {
           <Input
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            className="w-80 mb-3 mx-auto"
+            className="mb-3 mx-auto"
             placeholder="Email"
             type="email"
             prefix={<Icon.EmailOutlined />}
@@ -70,7 +76,7 @@ const Register = () => {
           <Input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            className="w-80 mx-auto"
+            className="mx-auto"
             placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={
@@ -84,9 +90,6 @@ const Register = () => {
             }
             type={isShowPassword ? 'text' : 'password'}
           />
-          <p className="body-s mt-2 text-red" hidden={!error && true}>
-            {error}
-          </p>
           <Button
             className="bg-dark-purple-2 text-white mt-14 w-48"
             type="submit"

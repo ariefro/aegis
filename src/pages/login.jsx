@@ -1,36 +1,36 @@
-// import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
+import toast from 'react-hot-toast';
 import { Button, Icon, Input } from '../components';
 import { authenticate } from '../store/userSlice';
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.user.loading);
+  const { loading } = useSelector((state) => state.user);
 
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await dispatch(authenticate({ username, password })).unwrap();
-      router.replace('/home');
-    } catch (err) {
-      setError(err);
+    const res = await dispatch(authenticate({ username, password })).unwrap();
+    if (res.status === 200) {
+      router.replace(`/home/${res.data.data.id}`);
+      toast.success('Welcome!');
+    } else {
+      toast.error(res.data.message);
       setUsername('');
       setPassword('');
     }
   };
 
   useEffect(() => {
-    router.prefetch('/dashboard');
+    router.prefetch('/home/[id]');
   }, []);
 
   return (
@@ -58,7 +58,7 @@ const Login = () => {
           <Input
             onChange={(e) => setUsername(e.target.value)}
             value={username}
-            className="w-80 mb-3 mx-auto"
+            className="mb-3 mx-auto"
             placeholder="Username"
             type="text"
             prefix={<Icon.ProfileOutlined />}
@@ -66,7 +66,7 @@ const Login = () => {
           <Input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            className="w-80 mx-auto"
+            className="mx-auto"
             placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={
@@ -80,16 +80,13 @@ const Login = () => {
             }
             type={isShowPassword ? 'text' : 'password'}
           />
-          <p className="body-s mt-2 text-red" hidden={!error && true}>
-            {error}
-          </p>
           <Button
             className="bg-dark-purple-2 text-white mt-14 w-48"
             type="submit"
-            disabled={!username || !password || isLoading}
+            disabled={!username || !password || loading}
           >
             <span className="font-quicksand font-semibold text-md">
-              {isLoading ? 'Loading' : 'Login'}
+              {loading ? 'Loading' : 'Login'}
             </span>
           </Button>
         </form>

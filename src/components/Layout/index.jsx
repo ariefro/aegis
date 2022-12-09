@@ -2,10 +2,10 @@ import React from 'react';
 import BackLayout from './BackLayout';
 import NavLayout from './NavLayout';
 
-const Layout = ({ children, icon, label, noNavigation, onClick }) => (
+const Layout = ({ children, footer, icon, label, noNavigation, onClick }) => (
   <div className="px-8 py-6">
     {noNavigation ? (
-      <BackLayout label={label} icon={icon} onClick={onClick}>
+      <BackLayout footer={footer} label={label} icon={icon} onClick={onClick}>
         {children}
       </BackLayout>
     ) : (

@@ -1,5 +1,5 @@
-import { Layout, Hero } from '../components';
-import Transactions from '../components/Pages/home/Transactions';
+import { Layout, Hero } from '../../components';
+import Transactions from '../../components/Pages/home/Transactions';
 
 const Home = () => (
   <div>

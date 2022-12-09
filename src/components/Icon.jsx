@@ -499,8 +499,64 @@ const EmailOutlined = ({ className }) => (
   </svg>
 );
 
+const ArrowDown = ({ className }) => (
+  <svg
+    className={className}
+    width="24"
+    height="24"
+    viewBox="0 0 25 24"
+    fill="none"
+    stroke={currentColor}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M17.8875 9.5L12.8875 14.5L7.88745 9.5"
+      stroke="current"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const CloseCircle = ({ className }) => (
+  <svg
+    className={className}
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={currentColor}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+      stroke="current"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M9.17004 14.83L14.83 9.17"
+      stroke="current"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M14.83 14.83L9.17004 9.17"
+      stroke="current"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export default {
+  ArrowDown,
   BackArrowCircle,
+  CloseCircle,
   ChartOutlined,
   EmailOutlined,
   Facebook,
