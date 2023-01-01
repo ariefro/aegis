@@ -19,8 +19,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await dispatch(authenticate({ username, password })).unwrap();
-    if (res.status === 200) {
-      router.replace(`/home/${res.data.data.id}`);
+    if (res) {
+      router.push(`/home/${res.wallet[0].id}`);
       toast.success('Welcome!');
     } else {
       toast.error(res.data.message);
@@ -70,13 +70,13 @@ const Login = () => {
             placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={
-              <buton
+              <Button
                 onClick={() => setIsShowPassword((prevState) => !prevState)}
               >
                 <Icon.Hidden
                   className={`${!isShowPassword && `fill-blue-400`}`}
                 />
-              </buton>
+              </Button>
             }
             type={isShowPassword ? 'text' : 'password'}
           />

@@ -80,13 +80,13 @@ const Register = () => {
             placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={
-              <buton
+              <Button
                 onClick={() => setIsShowPassword((prevState) => !prevState)}
               >
                 <Icon.Hidden
                   className={`${!isShowPassword && `stroke-blue-400`}`}
                 />
-              </buton>
+              </Button>
             }
             type={isShowPassword ? 'text' : 'password'}
           />

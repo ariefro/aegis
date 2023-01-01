@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import request from '../utils/apiRequest';
+import axios from 'axios';
+import cookie from 'cookiejs';
 
+const baseUrl = process.env.NEXT_PUBLIC_AEGIS_API;
 const initialState = {
   loading: false
 };
@@ -9,13 +11,13 @@ export const authenticate = createAsyncThunk(
   'user/authenticate',
   async (req) => {
     try {
-      const res = await request({
-        method: 'POST',
-        url: '/api/login',
-        data: req
-      });
-
-      return res;
+      const res = await axios.post(`${baseUrl}/api/login`, req);
+      if (res.status === 200) {
+        cookie.set('aegis_token', res.data.token);
+      } else {
+        throw res.data;
+      }
+      return res.data;
     } catch (err) {
       return err.response;
     }
@@ -24,12 +26,11 @@ export const authenticate = createAsyncThunk(
 
 export const register = createAsyncThunk('user/register', async (req) => {
   try {
-    const res = await request({
-      method: 'POST',
-      url: '/api/register',
-      data: req
-    });
-    return res.data;
+    const { status, data } = await axios.post(`${baseUrl}/api/register`, req);
+    if (status === 200) {
+      authenticate(req);
+    }
+    return data;
   } catch (err) {
     return err.response.data;
   }
