@@ -1,6 +1,11 @@
 import axios from 'axios';
+import cookie from 'cookiejs';
 
 const baseUrl = process.env.NEXT_PUBLIC_AEGIS_API;
+let token;
+if (typeof window !== 'undefined') {
+  token = cookie.get('aegis_token');
+}
 const request = async ({ method, url, config, ...props }) => {
   let response;
   switch (method) {
@@ -11,9 +16,9 @@ const request = async ({ method, url, config, ...props }) => {
       response = await axios[method.toLowerCase()](`${baseUrl}${url}`, {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
           ...config
-        },
-        withCredentials: true
+        }
       });
       break;
     case 'POST':
@@ -25,9 +30,9 @@ const request = async ({ method, url, config, ...props }) => {
         {
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
             ...config
-          },
-          withCredentials: true
+          }
         }
       );
       break;

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import cookie from 'cookiejs';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Icon, Layout } from '../../components';
@@ -11,9 +11,8 @@ const Setting = () => (
 
 Setting.getLayout = function getLayout(page) {
   const router = useRouter();
-  const handleLogout = async () => {
-    await axios.post('api/auth/logout');
-
+  const handleLogout = () => {
+    cookie.remove('aegis_token');
     router.replace('/login');
   };
   return (

@@ -1,3 +1,4 @@
+import cookie from 'cookiejs';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -8,9 +9,10 @@ const Custom404 = () => {
   const dispatch = useDispatch();
 
   const userWallet = async () => {
-    const res = await dispatch(getWallets()).unwrap();
-    if (res.status === 200 && res.data) {
-      setTimeout(() => replace(`/home/${res.data.data[0].id}`), 3000);
+    const token = cookie.get('aegis_token');
+    if (token) {
+      const res = await dispatch(getWallets()).unwrap();
+      setTimeout(() => replace(`/home/${res.wallets[0].id}`), 3000);
     } else {
       setTimeout(() => replace('/login'), 3000);
     }

@@ -18,7 +18,11 @@ export const getWallets = createAsyncThunk(
         method: 'GET',
         url: '/api/wallets'
       });
-      return res;
+
+      if (res.status === 200) {
+        return res.data;
+      }
+      throw res;
     } catch (err) {
       return err.response;
     }
