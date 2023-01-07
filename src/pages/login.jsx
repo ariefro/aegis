@@ -24,7 +24,7 @@ const Login = () => {
       router.push(`/home/${res.wallet[0].id}`);
       toast.success('Welcome!');
     } else {
-      toast.error(res.data.message);
+      toast.error(res.message);
       setUsername('');
       setPassword('');
     }

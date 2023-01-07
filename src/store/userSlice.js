@@ -19,7 +19,7 @@ export const authenticate = createAsyncThunk(
       }
       return data;
     } catch (err) {
-      return err.response;
+      return err.response.data;
     }
   }
 );
