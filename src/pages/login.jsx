@@ -17,6 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
+    const loadingToast = toast.loading('Loading');
     e.preventDefault();
     const res = await dispatch(authenticate({ username, password })).unwrap();
     if (res) {
@@ -27,6 +28,7 @@ const Login = () => {
       setUsername('');
       setPassword('');
     }
+    toast.dismiss(loadingToast);
   };
 
   useEffect(() => {
@@ -70,13 +72,14 @@ const Login = () => {
             placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={
-              <Button
+              <button
+                type="button"
                 onClick={() => setIsShowPassword((prevState) => !prevState)}
               >
                 <Icon.Hidden
                   className={`${!isShowPassword && `fill-blue-400`}`}
                 />
-              </Button>
+              </button>
             }
             type={isShowPassword ? 'text' : 'password'}
           />

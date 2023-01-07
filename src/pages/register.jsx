@@ -18,19 +18,21 @@ const Register = () => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
+    const toastLoading = toast.loading('Loading');
     e.preventDefault();
     const res = await dispatch(
       register({ email, username, password })
     ).unwrap();
-    if (res.code === 200) {
-      toast.success('You are registered!');
+    if (res) {
       push('/login');
+      toast.success('You are registered! Please login');
     } else {
       toast.error(res.message);
       setUsername('');
       setPassword('');
       setEmail('');
     }
+    toast.dismiss(toastLoading);
   };
 
   return (
@@ -80,13 +82,14 @@ const Register = () => {
             placeholder="Password"
             prefix={<Icon.SquaredKey />}
             suffix={
-              <Button
+              <button
+                type="button"
                 onClick={() => setIsShowPassword((prevState) => !prevState)}
               >
                 <Icon.Hidden
                   className={`${!isShowPassword && `stroke-blue-400`}`}
                 />
-              </Button>
+              </button>
             }
             type={isShowPassword ? 'text' : 'password'}
           />
