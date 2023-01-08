@@ -11,15 +11,15 @@ export const authenticate = createAsyncThunk(
   'user/authenticate',
   async (req) => {
     try {
-      const res = await axios.post(`${baseUrl}/api/login`, req);
-      if (res.status === 200) {
-        cookie.set('aegis_token', res.data.token);
+      const { data, status } = await axios.post(`${baseUrl}/api/login`, req);
+      if (status === 200) {
+        cookie.set('aegis_token', data.token);
       } else {
-        throw res.data;
+        throw data;
       }
-      return res.data;
+      return data;
     } catch (err) {
-      return err.response;
+      return err.response.data;
     }
   }
 );
@@ -27,8 +27,8 @@ export const authenticate = createAsyncThunk(
 export const register = createAsyncThunk('user/register', async (req) => {
   try {
     const { status, data } = await axios.post(`${baseUrl}/api/register`, req);
-    if (status === 200) {
-      authenticate(req);
+    if (status !== 200) {
+      throw data;
     }
     return data;
   } catch (err) {
