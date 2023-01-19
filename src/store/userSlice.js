@@ -12,14 +12,13 @@ export const authenticate = createAsyncThunk(
   async (req) => {
     try {
       const { data, status } = await axios.post(`${baseUrl}/api/login`, req);
-      if (status === 200) {
-        cookie.set('aegis_token', data.token);
-      } else {
+      if (status !== 200) {
         throw data;
       }
-      return data;
+      cookie.set('aegis_token', data.token);
+      return { data, status };
     } catch (err) {
-      return err.response.data;
+      return { data: err.response.data, status: err.status };
     }
   }
 );

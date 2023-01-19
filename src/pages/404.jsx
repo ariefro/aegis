@@ -2,7 +2,7 @@ import cookie from 'cookiejs';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getWallets } from '../store/transactionSlice';
+import { getWallets } from '../store/walletSlice';
 
 const Custom404 = () => {
   const { replace } = useRouter();

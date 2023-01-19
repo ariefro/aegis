@@ -20,13 +20,13 @@ const Login = () => {
     const loadingToast = toast.loading('Loading');
     e.preventDefault();
     const res = await dispatch(authenticate({ username, password })).unwrap();
-    if (res) {
-      router.push(`/home/${res.wallet[0].id}`);
-      toast.success('Welcome!');
-    } else {
-      toast.error(res.message);
+    if (res.status !== 200) {
+      toast.error(res.data.message);
       setUsername('');
       setPassword('');
+    } else {
+      router.push(`/home/${res.data.wallet.id}`);
+      toast.success('Welcome!');
     }
     toast.dismiss(loadingToast);
   };

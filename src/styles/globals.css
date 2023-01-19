@@ -30,15 +30,19 @@
   }
 
   .menu {
-    @apply w-12 h-12 rounded-2xl flex items-center justify-center border bg-white shadow-md active:bg-slate-100
+    @apply w-12 h-12 rounded-2xl flex items-center justify-center border bg-white shadow-md active:bg-slate-100;
   }
 }
 
-*{
+* {
   -webkit-tap-highlight-color: transparent;
 }
 
-input, button, textarea, select, a {
+input,
+button,
+textarea,
+select,
+a {
   -webkit-tap-highlight-color: transparent;
 }
 

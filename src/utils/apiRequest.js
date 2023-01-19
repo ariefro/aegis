@@ -6,7 +6,7 @@ let token;
 if (typeof window !== 'undefined') {
   token = cookie.get('aegis_token');
 }
-const request = async ({ method, url, config, ...props }) => {
+const request = async ({ method, url, headers, ...props }) => {
   let response;
   switch (method) {
     case 'GET':
@@ -17,7 +17,7 @@ const request = async ({ method, url, config, ...props }) => {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
-          ...config
+          ...headers
         }
       });
       break;
@@ -31,13 +31,13 @@ const request = async ({ method, url, config, ...props }) => {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
-            ...config
+            ...headers
           }
         }
       );
       break;
     default:
-      response = await axios.get(`${baseUrl}${url}`, config);
+      response = await axios.get(`${baseUrl}${url}`, headers);
   }
   return response;
 };
