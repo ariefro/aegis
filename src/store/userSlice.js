@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import cookie from 'cookiejs';
+import axios from '../utils/axiosConfig';
 
 const baseUrl = process.env.NEXT_PUBLIC_AEGIS_API;
 const initialState = {
@@ -11,15 +11,15 @@ export const authenticate = createAsyncThunk(
   'user/authenticate',
   async (req) => {
     try {
-      const { data, status } = await axios.post(`${baseUrl}/api/login`, req);
-      if (status === 200) {
-        cookie.set('aegis_token', data.token);
-      } else {
+      const { data, status } = await axios.post(`/api/login`, req);
+      if (status !== 200) {
         throw data;
       }
-      return data;
+      cookie.set('aegis_token', data.access_token);
+      axios.defaults.headers.common.Authorization = `Bearer ${data.access_token}`;
+      return { data, status };
     } catch (err) {
-      return err.response.data;
+      return { data: err.response.data, status: err.status };
     }
   }
 );
@@ -31,6 +31,20 @@ export const register = createAsyncThunk('user/register', async (req) => {
       throw data;
     }
     return data;
+  } catch (err) {
+    return err.response.data;
+  }
+});
+
+export const logout = createAsyncThunk('user/logout', async (req) => {
+  try {
+    const { data, status } = await axios.post('/api/logout', req);
+    if (status !== 200) {
+      throw data;
+    }
+    cookie.remove('aegis_token');
+    delete axios.defaults.headers.common.Authorization;
+    return { data, status };
   } catch (err) {
     return err.response.data;
   }

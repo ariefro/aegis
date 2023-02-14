@@ -13,7 +13,7 @@ const WalletList = ({ children, className, onClick }) => (
   </button>
 );
 
-const Hero = ({ walletList }) => {
+const Hero = ({ detail }) => {
   const { push, query, prefetch } = useRouter();
 
   useEffect(() => {
@@ -34,17 +34,27 @@ const Hero = ({ walletList }) => {
     <div>
       <button
         type="button"
-        className="relative shadow-md shadow-grey-4 bg-dark-purple-2 h-36 min-w-full rounded-[50px] flex justify-around items-center active:bg-dark-purple-1 overflow-hidden"
+        className="relative shadow-md shadow-grey-4 bg-dark-purple-2 h-36 min-w-full px-4 rounded-[50px] flex justify-around items-center active:bg-dark-purple-1 overflow-hidden"
       >
-        <p className="body-m text-white z-10 ">Tap to add wallet</p>
+        {detail ? (
+          <div className="relative z-10 text-left">
+            <p className="text-white font-semibold font-quicksand text-2xl">
+              {detail.name}
+            </p>
+            <p className="text-white font-bold font-quicksand text-4xl">{`${detail.currency} ${detail.balance}`}</p>
+          </div>
+        ) : (
+          <p className="body-m text-white z-10 ">No Wallet</p>
+        )}
         <div className="w-14 h-14 bg-dark-purple-3 rounded-full absolute -top-7 left-4" />
         <div className="w-36 h-36 border-4 border-dark-purple-3 rounded-full absolute -bottom-16 -right-4" />
       </button>
       <div className="grid grid-cols-3 gap-1 pt-2">
-        {walletList?.map((e) => (
-          <WalletList key={e.id}>{e.name}</WalletList>
-        ))}
-        {walletList?.length < 6 && (
+        {detail &&
+          detail.wallets?.map((e) => (
+            <WalletList key={e.id}>{e.name}</WalletList>
+          ))}
+        {detail && detail.wallets?.length < 6 && (
           <WalletList className="border-2 border-dark-purple-2 ">
             Add Wallet
           </WalletList>
