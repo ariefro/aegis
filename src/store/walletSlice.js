@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import request from '../utils/apiRequest';
+import axios from '../utils/axiosConfig';
 
 const initialState = {
   detail: {},
@@ -8,7 +8,7 @@ const initialState = {
 
 export const getWallets = createAsyncThunk('wallet/getWallets', async () => {
   try {
-    const { data, status } = await request({
+    const { data, status } = await axios({
       method: 'GET',
       url: '/api/wallets'
     });
@@ -26,7 +26,7 @@ export const getDetailWallet = createAsyncThunk(
   'wallet/getDetailWallet',
   async (walletId) => {
     try {
-      const { data, status } = await request({
+      const { data, status } = await axios({
         method: 'GET',
         url: `/api/wallet/${walletId}`
       });

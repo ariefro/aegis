@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import request from '../utils/apiRequest';
+import axios from '../utils/axiosConfig';
 
 const initialState = {
   wallet_id: 0,
@@ -14,7 +14,7 @@ export const createTransaction = createAsyncThunk(
   'transaction/create',
   async (req, { rejectWithValue }) => {
     try {
-      const res = request({
+      const res = axios({
         method: 'POST',
         url: '/api/something',
         data: req

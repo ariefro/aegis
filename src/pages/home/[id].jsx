@@ -9,6 +9,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const wallet = useSelector((state) => state.wallet);
   const router = useRouter();
+
   useEffect(() => {
     if (!router.isReady) return;
 
