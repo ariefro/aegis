@@ -12,6 +12,7 @@ export default function middleware(request) {
   }
 
   if (
+    request.nextUrl.pathname === '/' ||
     reqUrlIncludes('/home') ||
     reqUrlIncludes('/notif') ||
     reqUrlIncludes('/stats') ||
