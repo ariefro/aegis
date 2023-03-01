@@ -1,4 +1,3 @@
-import cookie from 'cookiejs';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Icon, Layout } from '../../components';
@@ -11,16 +10,12 @@ const Setting = () => (
 
 Setting.getLayout = function getLayout(page) {
   const router = useRouter();
-  const handleLogout = () => {
-    cookie.remove('aegis_token');
-    router.replace('/login');
-  };
   return (
     <Layout
       noNavigation
       label="Log Out"
       icon={<Icon.LogoutOutlined className="stroke-dark-purple-1 h-9 w-9" />}
-      onClick={handleLogout}
+      onClick={() => router.replace('/logout')}
     >
       {page}
     </Layout>
