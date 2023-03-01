@@ -5,7 +5,8 @@ const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AEGIS_API,
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  withCredentials: true
 });
 
 const refreshToken = () =>
