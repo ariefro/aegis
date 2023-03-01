@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import cookie from 'cookiejs';
-import axios from '../utils/axiosConfig';
+import cookie from 'js-cookie';
+import axios from 'axios';
 
 const baseUrl = process.env.NEXT_PUBLIC_AEGIS_API;
 const initialState = {
@@ -11,7 +11,7 @@ export const authenticate = createAsyncThunk(
   'user/authenticate',
   async (req) => {
     try {
-      const { data, status } = await axios.post(`/api/login`, req);
+      const { data, status } = await axios.post(`${baseUrl}/api/login`, req);
       if (status !== 200) {
         throw data;
       }
@@ -38,7 +38,9 @@ export const register = createAsyncThunk('user/register', async (req) => {
 
 export const logout = createAsyncThunk('user/logout', async (req) => {
   try {
-    const { data, status } = await axios.post('/api/logout', req);
+    const { data, status } = await axios.post('/api/logout', req, {
+      withCredentials: true
+    });
     if (status !== 200) {
       throw data;
     }
