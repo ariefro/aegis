@@ -14,7 +14,7 @@ export const createTransaction = createAsyncThunk(
   'transaction/create',
   async (req, { rejectWithValue }) => {
     try {
-      const res = axios({
+      const res = await axios({
         method: 'POST',
         url: '/api/something',
         data: req

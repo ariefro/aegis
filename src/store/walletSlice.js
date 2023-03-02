@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from '../utils/axiosConfig';
 
 const initialState = {
-  detail: {},
-  loading: false
+  detail: null,
+  loading: true
 };
 
 export const getWallets = createAsyncThunk('wallet/getWallets', async () => {
