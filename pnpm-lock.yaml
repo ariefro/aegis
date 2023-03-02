@@ -24,6 +24,7 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   react-hot-toast: ^2.4.0
+  react-loading-skeleton: ^3.1.1
   react-redux: ^8.0.4
   tailwindcss: ^3.1.8
   webpack: '>=5.9.0 <6.0.0'
@@ -40,6 +41,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hot-toast: 2.4.0_owo25xnefcwdq3zjgtohz6dbju
+  react-loading-skeleton: 3.1.1_react@18.2.0
   react-redux: 8.0.4_biqbaboplfbrettd7655fr4n2y
   webpack: 5.74.0
 
@@ -3925,6 +3927,14 @@ packages:
 
   /react-is/18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+    dev: false
+
+  /react-loading-skeleton/3.1.1_react@18.2.0:
+    resolution: {integrity: sha512-gQeNzzKXlevvquRDOhN5kas5VE7toTKrpmE9BpUdf0iip9c5ae0LcVbulh5ebO2CFl4RrYsyLuDtYGyrh1h1iA==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-redux/8.0.4_biqbaboplfbrettd7655fr4n2y:
