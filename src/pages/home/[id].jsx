@@ -18,7 +18,7 @@ const Home = () => {
     };
 
     init();
-  }, [router.isReady]);
+  }, [router.isReady, router.query]);
 
   return (
     <div>
