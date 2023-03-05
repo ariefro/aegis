@@ -25,7 +25,7 @@ const Select = ({ children, onClick, options, value }) => {
       <div className="flex-col flex relative">
         <button
           disabled={!options && true}
-          className="w-72 h-12 bg-white rounded-2xl px-5 outline-dark-purple-3"
+          className="w-72 h-12 bg-white shadow-md rounded-2xl px-5 outline-dark-purple-3"
           type="button"
           onClick={() => setShowOption((prev) => !prev)}
         >
@@ -39,7 +39,7 @@ const Select = ({ children, onClick, options, value }) => {
           </div>
         </button>
         {showOption && (
-          <div className="w-72 bg-white rounded-xl leading-loose absolute top-14 z-10 overflow-hidden">
+          <div className="w-72 bg-white shadow-md rounded-xl leading-loose absolute top-14 z-10 overflow-hidden">
             {children}
             {options.map((option) => (
               <button

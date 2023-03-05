@@ -19,6 +19,7 @@ const Home = () => {
 
     init();
   }, [router.isReady]);
+
   return (
     <div>
       <Hero detail={detail} loading={loading} />

@@ -7,21 +7,25 @@ const initialState = {
   type: 'transfer',
   slug: 'transfer',
   to_wallet_id: null,
-  name: ''
+  name: '',
+  currency: 'IDR'
 };
 
 export const createTransaction = createAsyncThunk(
   'transaction/create',
-  async (req, { rejectWithValue }) => {
+  async (data) => {
     try {
       const res = await axios({
         method: 'POST',
-        url: '/api/something',
-        data: req
+        url: '/api/transaction',
+        data
       });
+      if (res.status !== 200) {
+        throw res.data;
+      }
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response.data.message);
+      return { data: err.response.data, status: err.status };
     }
   }
 );
@@ -43,6 +47,11 @@ const transactionSlice = createSlice({
     },
     setTransactionName: (state, action) => {
       state.name = action.payload;
+    },
+    resetTransaction: (state) => {
+      state.name = '';
+      state.amount = 0;
+      state.to_wallet_id = null;
     }
   }
 });
@@ -51,6 +60,7 @@ export const {
   setTransactionType,
   setTransactionAmount,
   setTransactionTarget,
-  setTransactionName
+  setTransactionName,
+  resetTransaction
 } = transactionSlice.actions;
 export default transactionSlice.reducer;

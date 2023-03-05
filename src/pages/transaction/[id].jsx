@@ -1,12 +1,15 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Dial, Input, Layout, Select } from '../../components';
 import {
+  createTransaction,
   setTransactionAmount,
   setTransactionTarget,
   setTransactionType,
-  setTransactionName
+  setTransactionName,
+  resetTransaction
 } from '../../store/transactionSlice';
 import { maskToIdr, toArrayOption } from '../../utils/parser';
 
@@ -28,12 +31,13 @@ const options = [
 const Create = () => {
   const { query } = useRouter();
   const dispatch = useDispatch();
-  const transaction = useSelector((state) => state.transaction);
+  const { transaction } = useSelector((state) => state);
 
   useEffect(() => {
+    dispatch(resetTransaction());
     dispatch(
       setTransactionType({
-        wallet_id: Number(query.id),
+        wallet_id: query.id,
         type: query.type,
         slug: query.slug
       })
@@ -55,12 +59,40 @@ const Create = () => {
     }
   };
 
+  const handleConfirm = async () => {
+    const loadingToast = toast.loading('Sending');
+    const values = { ...transaction, amount: Number(transaction.amount) };
+    const res = await dispatch(createTransaction(values)).unwrap();
+
+    if (res.status !== 200) {
+      toast.error(res.data.message);
+    } else {
+      toast.success('Created');
+    }
+
+    toast.dismiss(loadingToast);
+  };
+
   const handleChangeName = (value) => {
     dispatch(setTransactionName(value));
   };
 
   return (
-    <div>
+    <Layout
+      footer={
+        <div className="text-center">
+          <Button
+            className="bg-dark-purple-2 text-white w-48 font-quicksand font-medium text-xl"
+            type="button"
+            onClick={handleConfirm}
+            disabled={!transaction.name || !transaction.amount}
+          >
+            Confirm
+          </Button>
+        </div>
+      }
+      noNavigation
+    >
       <p className="text-dark-purple-1 font-rubik font-medium text-3xl text-center mt-12 break-all">
         {maskToIdr(transaction.amount)}
       </p>
@@ -81,26 +113,6 @@ const Create = () => {
         </div>
         <Dial className="pt-11" onClick={handleClickDial} />
       </div>
-    </div>
-  );
-};
-
-Create.getLayout = function getLayout(page) {
-  return (
-    <Layout
-      footer={
-        <div className="text-center">
-          <Button
-            className="bg-dark-purple-2 text-white w-48 font-quicksand font-medium text-xl"
-            type="button"
-          >
-            Confirm
-          </Button>
-        </div>
-      }
-      noNavigation
-    >
-      {page}
     </Layout>
   );
 };
