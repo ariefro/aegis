@@ -79,7 +79,10 @@ const Hero = ({ detail, loading }) => {
               <WalletList key={e.id}>{e.name}</WalletList>
             ))}
           {detail && detail.wallets?.length < 6 && (
-            <WalletList className=" border-dark-purple-2 ">
+            <WalletList
+              className=" border-dark-purple-2"
+              onClick={() => push('/create')}
+            >
               Add Wallet
             </WalletList>
           )}
