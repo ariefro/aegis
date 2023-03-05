@@ -75,8 +75,13 @@ const Hero = ({ detail, loading }) => {
       ) : (
         <div className="grid grid-cols-3 gap-1 pt-3">
           {detail &&
-            detail.wallets?.map((e) => (
-              <WalletList key={e.id}>{e.name}</WalletList>
+            detail.wallets?.map((wallet) => (
+              <WalletList
+                key={wallet.id}
+                onClick={() => push(`/home/${wallet.id}`)}
+              >
+                {wallet.name}
+              </WalletList>
             ))}
           {detail && detail.wallets?.length < 6 && (
             <WalletList
