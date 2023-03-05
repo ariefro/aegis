@@ -51,6 +51,7 @@ instance.interceptors.response.use(
     if (response.status === 401) {
       cookie.remove('aegis_token');
       delete axios.defaults.headers.common.Authorization;
+      window.location = '/login';
     }
     return Promise.reject(error);
   }

@@ -22,8 +22,9 @@ const MyApp = ({ Component, pageProps }) => {
   }, []);
 
   const getLayout = Component.getLayout || ((page) => page);
+
   return (
-    <>
+    <Provider store={store}>
       <Head>
         <meta
           name="viewport"
@@ -31,14 +32,8 @@ const MyApp = ({ Component, pageProps }) => {
         />
       </Head>
       <Toaster />
-      <Provider store={store}>
-        {width <= 600 ? (
-          getLayout(<Component {...pageProps} />)
-        ) : (
-          <WarningPage />
-        )}
-      </Provider>
-    </>
+      {width <= 600 ? getLayout(<Component {...pageProps} />) : <WarningPage />}
+    </Provider>
   );
 };
 

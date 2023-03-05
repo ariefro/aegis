@@ -1,5 +1,6 @@
 import { Children, cloneElement } from 'react';
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 
 const Link = ({ children, href, pushRoute, ...props }) => {
   const { pathname, push, replace, query } = useRouter();
@@ -19,9 +20,14 @@ const Link = ({ children, href, pushRoute, ...props }) => {
   };
 
   return (
-    <a href={href} onClick={(e) => handleChangePage(e)} {...props}>
+    <NextLink
+      href={href}
+      legacyBehavior={false}
+      onClick={(e) => handleChangePage(e)}
+      {...props}
+    >
       {cloneElement(child, { className: className || null })}
-    </a>
+    </NextLink>
   );
 };
 
