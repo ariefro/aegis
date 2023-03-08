@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
+@layer components {
   .heading-l {
     @apply font-rubik font-medium text-2xl;
   }

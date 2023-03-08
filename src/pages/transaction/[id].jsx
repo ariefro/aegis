@@ -98,7 +98,7 @@ const Create = () => {
       </p>
       <div className="pt-11">
         <Input
-          className="mb-3 text-center"
+          className="mb-3 mx-auto"
           placeholder="Name"
           onChange={(e) => handleChangeName(e.target.value)}
         />

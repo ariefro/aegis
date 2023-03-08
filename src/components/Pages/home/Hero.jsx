@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { maskToIdr } from '../../../utils/parser';
@@ -17,22 +16,15 @@ const WalletList = ({ children, className, onClick }) => (
   </button>
 );
 
-const MenuLoading = () => (
-  <div className="w-12 h-12 mb-4">
-    <Skeleton height={48} width={48} style={{ borderRadius: '16px' }} />
-    <Skeleton />
-  </div>
-);
-
 const Hero = ({ detail, loading }) => {
-  const { push, query, prefetch } = useRouter();
+  const { push, query } = useRouter();
 
-  useEffect(() => {
-    prefetch('/transaction/[id]');
-    prefetch('/setting');
-    prefetch('/notification/[id]');
-    prefetch('/stats/[id]');
-  }, []);
+  // useEffect(() => {
+  //   prefetch('/transaction/[id]');
+  //   prefetch('/setting');
+  //   prefetch('/notification/[id]');
+  //   prefetch('/stats/[id]');
+  // }, []);
 
   const handleTransaction = (type, slug) => {
     push({
@@ -49,6 +41,7 @@ const Hero = ({ detail, loading }) => {
         <button
           type="button"
           className="relative shadow-md shadow-grey-4 bg-dark-purple-2 h-36 min-w-full px-4 rounded-[50px] flex justify-around items-center active:bg-dark-purple-1 overflow-hidden"
+          onClick={() => push(`/detail/${detail.wallet_id}`)}
         >
           {detail ? (
             <div className="relative z-10 text-left">
@@ -94,46 +87,33 @@ const Hero = ({ detail, loading }) => {
         </div>
       )}
       <div className="flex align-middle justify-around pt-3">
-        {loading ? (
-          <MenuLoading />
-        ) : (
-          <Menu
-            label="Transfer"
-            onClick={() => handleTransaction('transfer', 'transfer')}
-          >
-            <Icon.Transfer className="h-8 w-8 stroke-dark-purple-1" />
-          </Menu>
-        )}
-        {loading ? (
-          <MenuLoading />
-        ) : (
-          <Menu
-            label="Payment"
-            onClick={() => handleTransaction('expense', 'payment')}
-          >
-            <Icon.Payment className="h-8 w-8 stroke-dark-purple-1" />
-          </Menu>
-        )}
-        {loading ? (
-          <MenuLoading />
-        ) : (
-          <Menu
-            label="Payout"
-            onClick={() => handleTransaction('expense', 'payout')}
-          >
-            <Icon.Payout className="h-8 w-8 stroke-dark-purple-1" />
-          </Menu>
-        )}
-        {loading ? (
-          <MenuLoading />
-        ) : (
-          <Menu
-            label="Top up"
-            onClick={() => handleTransaction('income', 'topup')}
-          >
-            <Icon.TopUp className="h-8 w-8 stroke-dark-purple-1" />
-          </Menu>
-        )}
+        <Menu
+          label="Transfer"
+          onClick={() => handleTransaction('transfer', 'transfer')}
+        >
+          <Icon.Transfer className="h-8 w-8 stroke-dark-purple-1" />
+        </Menu>
+
+        <Menu
+          label="Payment"
+          onClick={() => handleTransaction('expense', 'payment')}
+        >
+          <Icon.Payment className="h-8 w-8 stroke-dark-purple-1" />
+        </Menu>
+
+        <Menu
+          label="Payout"
+          onClick={() => handleTransaction('expense', 'payout')}
+        >
+          <Icon.Payout className="h-8 w-8 stroke-dark-purple-1" />
+        </Menu>
+
+        <Menu
+          label="Top up"
+          onClick={() => handleTransaction('income', 'topup')}
+        >
+          <Icon.TopUp className="h-8 w-8 stroke-dark-purple-1" />
+        </Menu>
       </div>
     </div>
   );

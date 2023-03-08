@@ -3,6 +3,7 @@ import axios from '../utils/axiosConfig';
 
 const initialState = {
   detail: null,
+  profile: null,
   loading: true
 };
 
@@ -42,6 +43,26 @@ export const getDetailWallet = createAsyncThunk(
   }
 );
 
+export const getWalletProfile = createAsyncThunk(
+  'wallet/getWalletProfile',
+  async (walletId) => {
+    try {
+      const { data, status } = await axios({
+        method: 'GET',
+        url: `/api/wallet-detail/${walletId}`
+      });
+
+      if (status !== 200) {
+        throw data;
+      }
+
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);
+
 const walletSlice = createSlice({
   name: 'wallet',
   initialState,
@@ -52,6 +73,13 @@ const walletSlice = createSlice({
     });
     builder.addCase(getDetailWallet.fulfilled, (state, action) => {
       state.detail = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getWalletProfile.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getWalletProfile.fulfilled, (state, action) => {
+      state.profile = action.payload;
       state.loading = false;
     });
   }
