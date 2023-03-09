@@ -4,7 +4,7 @@ import axios from '../utils/axiosConfig';
 const initialState = {
   detail: null,
   profile: null,
-  toWalletList: null,
+  toWalletList: [],
   loading: true
 };
 
