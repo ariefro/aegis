@@ -23,18 +23,6 @@ export const authenticate = createAsyncThunk(
   }
 );
 
-export const register = createAsyncThunk('user/register', async (req) => {
-  try {
-    const { status, data } = await axios.post(`/api/register`, req);
-    if (status !== 200) {
-      throw data;
-    }
-    return data;
-  } catch (err) {
-    return err.response.data;
-  }
-});
-
 export const logout = createAsyncThunk('user/logout', async (req) => {
   try {
     const { data, status } = await axios.post('/api/logout', req);
@@ -60,16 +48,6 @@ const userSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(authenticate.rejected, (state) => {
-      state.loading = false;
-    });
-
-    builder.addCase(register.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(register.fulfilled, (state) => {
-      state.loading = false;
-    });
-    builder.addCase(register.rejected, (state) => {
       state.loading = false;
     });
   }

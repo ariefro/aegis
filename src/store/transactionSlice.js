@@ -1,42 +1,20 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from '../utils/axiosConfig';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   wallet_id: 0,
   amount: 0,
-  type: 'transfer',
   slug: 'transfer',
   to_wallet_id: null,
   name: '',
   currency: 'IDR'
 };
 
-export const createTransaction = createAsyncThunk(
-  'transaction/create',
-  async (data) => {
-    try {
-      const res = await axios({
-        method: 'POST',
-        url: '/api/transaction',
-        data
-      });
-      if (res.status !== 200) {
-        throw res.data;
-      }
-      return res.data;
-    } catch (err) {
-      return { data: err.response.data, status: err.status };
-    }
-  }
-);
-
 const transactionSlice = createSlice({
   name: 'transaction',
   initialState,
   reducers: {
-    setTransactionType: (state, action) => {
+    setTransactionSlug: (state, action) => {
       state.wallet_id = action.payload.wallet_id;
-      state.type = action.payload.type;
       state.slug = action.payload.slug;
     },
     setTransactionAmount: (state, action) => {
@@ -57,7 +35,7 @@ const transactionSlice = createSlice({
 });
 
 export const {
-  setTransactionType,
+  setTransactionSlug,
   setTransactionAmount,
   setTransactionTarget,
   setTransactionName,

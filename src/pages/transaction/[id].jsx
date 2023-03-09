@@ -4,41 +4,46 @@ import { toast } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Dial, Input, Layout, Select } from '../../components';
 import {
-  createTransaction,
   setTransactionAmount,
   setTransactionTarget,
-  setTransactionType,
+  setTransactionSlug,
   setTransactionName,
   resetTransaction
 } from '../../store/transactionSlice';
 import { maskToIdr, toArrayOption } from '../../utils/parser';
-
-const options = [
-  {
-    wallet_id: 2,
-    name: 'Mabank'
-  },
-  {
-    wallet_id: 0,
-    name: 'Mabank3'
-  },
-  {
-    wallet_id: 1,
-    name: 'Mabank2'
-  }
-];
+import useApiRequest from '../../hooks/useAPIRequest';
+import { getToWalletList } from '../../store/walletSlice';
 
 const Create = () => {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const dispatch = useDispatch();
-  const { transaction } = useSelector((state) => state);
+  const { transaction, wallet } = useSelector((state) => state);
+  const { loading: loadingCreate, fire } = useApiRequest({
+    method: 'POST',
+    url: '/api/transaction',
+    data: {
+      ...transaction,
+      amount: Number(transaction.amount),
+      to_wallet_id: query.slug === 'transfer' ? transaction.to_wallet_id : null
+    }
+  });
+
+  const getList = async () => {
+    await dispatch(getToWalletList(query.id)).unwrap();
+  };
+
+  const options = wallet.toWalletList?.map((list) => ({
+    wallet_id: list.id,
+    name: list.name
+  }));
 
   useEffect(() => {
+    if (query.slug === 'transfer') getList();
+
     dispatch(resetTransaction());
     dispatch(
-      setTransactionType({
+      setTransactionSlug({
         wallet_id: query.id,
-        type: query.type,
         slug: query.slug
       })
     );
@@ -59,18 +64,15 @@ const Create = () => {
     }
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     const loadingToast = toast.loading('Sending');
-    const values = { ...transaction, amount: Number(transaction.amount) };
-    const res = await dispatch(createTransaction(values)).unwrap();
-
-    if (res.status !== 200) {
-      toast.error(res.data.message);
-    } else {
-      toast.success('Created');
-    }
-
-    toast.dismiss(loadingToast);
+    fire()
+      .then(() => {
+        toast.success('Created');
+        push(`/home/${query.id}`);
+      })
+      .catch((err) => toast.error(err.data.message))
+      .finally(() => toast.dismiss(loadingToast));
   };
 
   const handleChangeName = (value) => {
@@ -85,7 +87,7 @@ const Create = () => {
             className="bg-dark-purple-2 text-white w-48 font-quicksand font-medium text-xl"
             type="button"
             onClick={handleConfirm}
-            disabled={!transaction.name || !transaction.amount}
+            disabled={!transaction.name || !transaction.amount || loadingCreate}
           >
             Confirm
           </Button>
@@ -103,7 +105,7 @@ const Create = () => {
           onChange={(e) => handleChangeName(e.target.value)}
         />
         <div className="flex justify-center">
-          {query.type === 'transfer' && (
+          {query.slug === 'transfer' && (
             <Select
               options={data}
               onClick={(value) => handleSelectOption(value.wallet_id)}

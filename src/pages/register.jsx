@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
 
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { Button, Icon, Input } from '../components';
-import { register } from '../store/userSlice';
+import useAPIRequest from '../hooks/useAPIRequest';
+// import { register } from '../store/userSlice';
 
 const Register = () => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.user.loading);
   const { push } = useRouter();
 
   const [email, setEmail] = useState('');
@@ -17,21 +15,26 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const { loading, fire } = useAPIRequest({
+    method: 'POST',
+    url: '/api/register',
+    data: { username, email, password }
+  });
+
   const handleSubmit = async (e) => {
     const toastLoading = toast.loading('Loading');
     e.preventDefault();
-    const res = await dispatch(
-      register({ email, username, password })
-    ).unwrap();
-    if (res) {
-      push('/login');
-      toast.success('You are registered! Please login');
-    } else {
-      toast.error(res.message);
-      setUsername('');
-      setPassword('');
-      setEmail('');
-    }
+    fire()
+      .then(() => {
+        toast.success('You are registered! Please login');
+        push('/login');
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        setUsername('');
+        setPassword('');
+        setEmail('');
+      });
     toast.dismiss(toastLoading);
   };
 
@@ -96,10 +99,10 @@ const Register = () => {
           <Button
             className="bg-dark-purple-2 text-white mt-14 w-48"
             type="submit"
-            disabled={!username || !email || !password || isLoading}
+            disabled={!username || !email || !password || loading}
           >
             <span className="font-quicksand font-semibold text-md">
-              {isLoading ? 'Loading' : 'Register'}
+              {loading ? 'Loading' : 'Register'}
             </span>
           </Button>
         </form>
