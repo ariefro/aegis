@@ -32,10 +32,20 @@ const Create = () => {
     await dispatch(getToWalletList(query.id)).unwrap();
   };
 
-  const options = wallet.toWalletList?.map((list) => ({
-    wallet_id: list.id,
-    name: list.name
-  }));
+  // const options = wallet.toWalletList?.map((list) => ({
+  //   wallet_id: list.id,
+  //   name: list.name
+  // }));
+  const options = [
+    {
+      name: 'mencoba',
+      wallet_id: 1
+    },
+    {
+      name: 'sukses selalu',
+      wallet_id: 2
+    }
+  ];
 
   useEffect(() => {
     if (query.slug === 'transfer') getList();
@@ -50,7 +60,11 @@ const Create = () => {
     dispatch(setTransactionTarget(options[0].wallet_id));
   }, [query]);
 
-  const data = toArrayOption(options, 'name', 'wallet_id');
+  const mappedOption = toArrayOption({
+    arrOfObj: options,
+    keyOfName: 'name',
+    keyOfId: 'wallet_id'
+  });
 
   const handleSelectOption = (id) => {
     dispatch(setTransactionTarget(id));
@@ -71,7 +85,7 @@ const Create = () => {
         toast.success('Created');
         push(`/home/${query.id}`);
       })
-      .catch((err) => toast.error(err.data.message))
+      .catch((err) => toast.error(err.message))
       .finally(() => toast.dismiss(loadingToast));
   };
 
@@ -107,9 +121,12 @@ const Create = () => {
         <div className="flex justify-center">
           {query.slug === 'transfer' && (
             <Select
-              options={data}
+              options={mappedOption}
               onClick={(value) => handleSelectOption(value.wallet_id)}
-              value={data.find((e) => e.id === transaction.to_wallet_id)?.name}
+              value={
+                mappedOption.find((e) => e.id === transaction.to_wallet_id)
+                  ?.name
+              }
             />
           )}
         </div>
