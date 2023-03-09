@@ -17,7 +17,7 @@ import { getToWalletList } from '../../store/walletSlice';
 const Create = () => {
   const { query, push } = useRouter();
   const dispatch = useDispatch();
-  const { transaction, wallet } = useSelector((state) => state);
+  const { transaction } = useSelector((state) => state);
   const { loading: loadingCreate, fire } = useApiRequest({
     method: 'POST',
     url: '/api/transaction',
@@ -32,10 +32,6 @@ const Create = () => {
     await dispatch(getToWalletList(query.id)).unwrap();
   };
 
-  // const options = wallet.toWalletList?.map((list) => ({
-  //   wallet_id: list.id,
-  //   name: list.name
-  // }));
   const options = [
     {
       name: 'mencoba',
