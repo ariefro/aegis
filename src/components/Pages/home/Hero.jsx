@@ -6,10 +6,10 @@ import { maskToIdr } from '../../../utils/parser';
 import Icon from '../../Icon';
 import Menu from './Menu';
 
-const WalletList = ({ children, className, onClick }) => (
+const WalletList = ({ bg, children, className, onClick }) => (
   <button
     type="button"
-    className={`bg-purple rounded-xl text-center text-white body-m py-1 active:bg-dark-purple-2 ${className}`}
+    className={`${className} bg-${bg} rounded-xl text-center text-white body-m py-1`}
     onClick={onClick}
   >
     {children}
@@ -19,17 +19,10 @@ const WalletList = ({ children, className, onClick }) => (
 const Hero = ({ detail, loading }) => {
   const { push, query } = useRouter();
 
-  // useEffect(() => {
-  //   prefetch('/transaction/[id]');
-  //   prefetch('/setting');
-  //   prefetch('/notification/[id]');
-  //   prefetch('/stats/[id]');
-  // }, []);
-
-  const handleTransaction = (type, slug) => {
+  const handleTransaction = (slug) => {
     push({
       pathname: '/transaction/[id]',
-      query: { id: query.id, type, slug }
+      query: { id: query.id, slug }
     });
   };
 
@@ -70,6 +63,7 @@ const Hero = ({ detail, loading }) => {
           {detail &&
             detail.wallets?.map((wallet) => (
               <WalletList
+                bg={query.id === wallet.id ? 'dark-purple-1' : 'dark-purple-3'}
                 key={wallet.id}
                 onClick={() => push(`/home/${wallet.id}`)}
               >
@@ -78,7 +72,8 @@ const Hero = ({ detail, loading }) => {
             ))}
           {detail && detail.wallets?.length < 6 && (
             <WalletList
-              className=" border-dark-purple-2"
+              bg="transparent"
+              className="outline outline-1 outline-dark-purple-2 text-black font-bold"
               onClick={() => push('/create')}
             >
               Add Wallet
@@ -87,31 +82,19 @@ const Hero = ({ detail, loading }) => {
         </div>
       )}
       <div className="flex align-middle justify-around pt-3">
-        <Menu
-          label="Transfer"
-          onClick={() => handleTransaction('transfer', 'transfer')}
-        >
+        <Menu label="Transfer" onClick={() => handleTransaction('transfer')}>
           <Icon.Transfer className="h-8 w-8 stroke-dark-purple-1" />
         </Menu>
 
-        <Menu
-          label="Payment"
-          onClick={() => handleTransaction('expense', 'payment')}
-        >
+        <Menu label="Payment" onClick={() => handleTransaction('payment')}>
           <Icon.Payment className="h-8 w-8 stroke-dark-purple-1" />
         </Menu>
 
-        <Menu
-          label="Payout"
-          onClick={() => handleTransaction('expense', 'payout')}
-        >
+        <Menu label="Payout" onClick={() => handleTransaction('payout')}>
           <Icon.Payout className="h-8 w-8 stroke-dark-purple-1" />
         </Menu>
 
-        <Menu
-          label="Top up"
-          onClick={() => handleTransaction('income', 'topup')}
-        >
+        <Menu label="Top up" onClick={() => handleTransaction('topup')}>
           <Icon.TopUp className="h-8 w-8 stroke-dark-purple-1" />
         </Menu>
       </div>

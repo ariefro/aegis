@@ -5,9 +5,13 @@ import { toast } from 'react-hot-toast';
 import { Input, Layout } from '../components';
 import useAPIRequest from '../hooks/useAPIRequest';
 
-const AddButton = () => (
+const AddButton = ({ ...props }) => (
   <div className="text-center">
-    <button className="heading-m text-dark-purple-2 mx-auto" type="submit">
+    <button
+      className="heading-m text-dark-purple-2 mx-auto disabled:text-gray-300"
+      type="submit"
+      {...props}
+    >
       Add Card
     </button>
   </div>
@@ -51,12 +55,13 @@ const Create = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <Input
-          placeholder="Name"
+          placeholder="Name (Max 10 characters)"
           className="mb-6 mx-auto"
           name="name"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          maxLength={10}
         />
         <Input
           placeholder="Initial balance"
@@ -67,7 +72,7 @@ const Create = () => {
           value={balance}
           onChange={(e) => setBalance(e.target.value)}
         />
-        <AddButton />
+        <AddButton disabled={!name} />
       </form>
     </Layout>
   );

@@ -9,5 +9,5 @@ export const maskToIdr = (number) =>
     .replace(/\D00$/, '');
 
 // use for parsing array of object for <Select> component, pass it in options props
-export const toArrayOption = (arrOfObj, keyOfName, keyOfId) =>
+export const toArrayOption = ({ arrOfObj, keyOfName, keyOfId }) =>
   arrOfObj.map((obj) => ({ name: obj[keyOfName], id: obj[keyOfId], ...obj }));
