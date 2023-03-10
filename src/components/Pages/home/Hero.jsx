@@ -94,7 +94,7 @@ const Hero = ({ detail, loading }) => {
           <Icon.Payout className="h-8 w-8 stroke-dark-purple-1" />
         </Menu>
 
-        <Menu label="Top up" onClick={() => handleTransaction('topup')}>
+        <Menu label="Top up" onClick={() => handleTransaction('top up')}>
           <Icon.TopUp className="h-8 w-8 stroke-dark-purple-1" />
         </Menu>
       </div>

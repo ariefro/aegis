@@ -21,10 +21,8 @@ const NavLayout = ({ children }) => (
       </header>
       {children}
     </div>
-    <footer className="absolute bottom-4 right-0 left-0 px-6">
-      <div className="max-w-sm m-auto">
-        <Navigation />
-      </div>
+    <footer className="fixed bottom-4 right-1/2 px-6 translate-x-1/2 w-full max-w-[480px] z-10">
+      <Navigation />
     </footer>
   </>
 );
