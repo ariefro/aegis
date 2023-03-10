@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import Image from 'next/image';
 import { logout } from '../store/userSlice';
 
 const LogoutPage = () => {
@@ -13,7 +14,12 @@ const LogoutPage = () => {
       .then(() => router.replace('/login'));
   }, []);
 
-  return null;
+  return (
+    <div className="flex justify-center items-center h-screen gap-2">
+      <Image src="/spinner.gif" alt="spinner" width={80} height={80} />
+      <p>Logging out</p>
+    </div>
+  );
 };
 
 export default LogoutPage;
