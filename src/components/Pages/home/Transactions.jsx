@@ -29,7 +29,7 @@ const LoadingSkeleton = () => (
 );
 
 const Transactions = ({ transactions, loading }) => (
-  <div className="pb-28 overflow-auto top-[419.5px] right-8 left-8">
+  <div className="pb-24 overflow-auto top-[419.5px] right-8 left-8">
     {loading ? (
       <>
         <LoadingSkeleton />
