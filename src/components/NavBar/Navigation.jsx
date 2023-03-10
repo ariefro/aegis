@@ -12,7 +12,7 @@ const Navigation = ({ ...props }) => (
     <Link href="/stats">
       <Icon.ChartOutlined />
     </Link>
-    <Link href="/notification">
+    <Link pushRoute href="/notification">
       <Icon.NotificationOutlined />
     </Link>
     <Link pushRoute href="/setting">
