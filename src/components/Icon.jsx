@@ -553,8 +553,34 @@ const CloseCircle = ({ className }) => (
   </svg>
 );
 
+const ArrowSquared = ({ className }) => (
+  <svg
+    className={className}
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    stroke={currentColor}
+  >
+    <path
+      d="M3.35294 8.95043C4.00443 6.17301 6.17307 4.00437 8.95049 3.35288C10.9563 2.88237 13.0438 2.88237 15.0496 3.35288C17.8271 4.00437 19.9957 6.17301 20.6472 8.95044C21.1177 10.9563 21.1177 13.0437 20.6472 15.0496C19.9957 17.827 17.8271 19.9956 15.0496 20.6471C13.0438 21.1176 10.9563 21.1176 8.9505 20.6471C6.17307 19.9956 4.00443 17.827 3.35294 15.0496C2.88244 13.0437 2.88244 10.9563 3.35294 8.95043Z"
+      stroke="current"
+      strokeWidth="1.67711"
+    />
+    <path
+      d="M9.50006 13L12.0001 10.5L14.5001 13"
+      stroke="current"
+      strokeWidth="1.67711"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export default {
   ArrowDown,
+  ArrowSquared,
   BackArrowCircle,
   CloseCircle,
   ChartOutlined,
