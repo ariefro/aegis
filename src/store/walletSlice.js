@@ -85,26 +85,6 @@ export const getToWalletList = createAsyncThunk(
   }
 );
 
-export const getNotifications = createAsyncThunk(
-  'wallet/getNotification',
-  async () => {
-    try {
-      const { data, status } = await axios({
-        method: 'GET'
-        // url: 'http://demo5913406.mockable.io/'
-      });
-
-      if (status !== 200) {
-        throw data;
-      }
-
-      return data;
-    } catch (err) {
-      return err.response.data;
-    }
-  }
-);
-
 const walletSlice = createSlice({
   name: 'wallet',
   initialState,
@@ -129,13 +109,6 @@ const walletSlice = createSlice({
     });
     builder.addCase(getToWalletList.fulfilled, (state, action) => {
       state.toWalletList = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(getNotifications.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(getNotifications.fulfilled, (state, action) => {
-      state.notifications = action.payload;
       state.loading = false;
     });
   }
