@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Input, Layout } from '../components';
 import useAPIRequest from '../hooks/useAPIRequest';
+import { inputMaskToIdr } from '../utils/parser';
 
 const AddButton = ({ ...props }) => (
   <div className="text-center">
@@ -25,8 +26,17 @@ const Create = () => {
   const { fire, error } = useAPIRequest({
     method: 'POST',
     url: 'api/wallet',
-    data: { name, balance: Number(balance), currency: 'IDR' }
+    data: {
+      name,
+      balance: Number(balance.split('.').join('')),
+      currency: 'IDR'
+    }
   });
+
+  const handleBalanceChange = (e) => {
+    const { value } = e.target;
+    setBalance(inputMaskToIdr(value));
+  };
 
   const handleSubmit = (e) => {
     const loadingToast = toast.loading('Loading');
@@ -68,9 +78,8 @@ const Create = () => {
           className="mb-10 mx-auto"
           suffix="IDR"
           name="balance"
-          type="number"
           value={balance}
-          onChange={(e) => setBalance(e.target.value)}
+          onChange={handleBalanceChange}
         />
         <AddButton disabled={!name} />
       </form>
