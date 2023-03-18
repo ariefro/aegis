@@ -28,7 +28,7 @@ const Create = () => {
     url: 'api/wallet',
     data: {
       name,
-      balance: Number(balance.split('.').join('')),
+      balance: Number(balance.replace(/\./g, '')),
       currency: 'IDR'
     }
   });
