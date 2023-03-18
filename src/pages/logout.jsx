@@ -9,9 +9,13 @@ const LogoutPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    dispatch(logout())
-      .unwrap()
-      .then(() => router.replace('/login'));
+    setTimeout(
+      () =>
+        dispatch(logout())
+          .unwrap()
+          .then(() => router.replace('/login')),
+      1000
+    );
   }, []);
 
   return (

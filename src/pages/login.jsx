@@ -25,7 +25,7 @@ const Login = () => {
       setUsername('');
       setPassword('');
     } else {
-      router.push(`/home/${res.data.wallet.id}`);
+      router.replace(`/home/${res.data.wallet.id}`);
       toast.success('Welcome!');
     }
     toast.dismiss(loadingToast);
@@ -96,7 +96,9 @@ const Login = () => {
         <p className="body-s text-grey-4 mt-3">
           Don&apos;t have an account yet?{' '}
           <span className="text-blue-700">
-            <Link href="/register">Register</Link>
+            <Link href="/register" replace>
+              Register
+            </Link>
           </span>
         </p>
       </div>

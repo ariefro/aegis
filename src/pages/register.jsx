@@ -7,7 +7,7 @@ import { Button, Icon, Input } from '../components';
 import useAPIRequest from '../hooks/useAPIRequest';
 
 const Register = () => {
-  const { push } = useRouter();
+  const { replace } = useRouter();
 
   const [email, setEmail] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -26,7 +26,7 @@ const Register = () => {
     fire()
       .then(() => {
         toast.success('You are registered! Please login');
-        push('/login');
+        replace('/login');
       })
       .catch((err) => {
         toast.error(err.message);
@@ -108,7 +108,9 @@ const Register = () => {
         <p className="body-s text-grey-4 mt-3">
           You have account?{' '}
           <span className="text-blue-700">
-            <Link href="/login">Login</Link>
+            <Link href="/login" replace>
+              Login
+            </Link>
           </span>
         </p>
       </div>
