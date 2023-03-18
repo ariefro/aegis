@@ -18,7 +18,7 @@ const Card = ({ date, message, name, type, loading }) => (
     </div>
     <div>
       {!loading && type === 'transfer' ? (
-        <Icon.Transfer />
+        <Icon.Transfer className="stroke-purple" />
       ) : (
         <Icon.ArrowSquared
           className={

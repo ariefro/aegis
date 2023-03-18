@@ -28,7 +28,7 @@ const Notification = () => {
           <Card loading={loading} />
         </>
       )}
-      {notifications &&
+      {notifications && notifications.length ? (
         notifications.map((notif) => (
           <Card
             key={notif.created_at}
@@ -37,7 +37,12 @@ const Notification = () => {
             name={notif.name}
             type={notif.type}
           />
-        ))}
+        ))
+      ) : (
+        <div className="text-center text-grey-4">
+          <p>No Notifications</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { Button, Icon, Input } from '../components';
 import useAPIRequest from '../hooks/useAPIRequest';
-// import { register } from '../store/userSlice';
 
 const Register = () => {
   const { push } = useRouter();
