@@ -10,7 +10,7 @@ import {
   setTransactionName,
   resetTransaction
 } from '../../store/transactionSlice';
-import { maskToIdr, toArrayOption } from '../../utils/parser';
+import { maskToIdr } from '../../utils/parser';
 import useApiRequest from '../../hooks/useAPIRequest';
 import { getToWalletList } from '../../store/walletSlice';
 
@@ -18,6 +18,7 @@ const Create = () => {
   const { query, push } = useRouter();
   const dispatch = useDispatch();
   const { transaction } = useSelector((state) => state);
+  const { toWalletList } = useSelector((state) => state.wallet);
   const { loading: loadingCreate, fire } = useApiRequest({
     method: 'POST',
     url: '/api/transaction',
@@ -29,19 +30,9 @@ const Create = () => {
   });
 
   const getList = async () => {
-    await dispatch(getToWalletList(query.id)).unwrap();
+    const res = await dispatch(getToWalletList(query.id)).unwrap();
+    dispatch(setTransactionTarget(res.wallets[0].id));
   };
-
-  const options = [
-    {
-      name: 'mencoba',
-      wallet_id: 1
-    },
-    {
-      name: 'sukses selalu',
-      wallet_id: 2
-    }
-  ];
 
   useEffect(() => {
     if (query.slug === 'transfer') getList();
@@ -53,14 +44,7 @@ const Create = () => {
         slug: query.slug
       })
     );
-    dispatch(setTransactionTarget(options[0].wallet_id));
   }, [query]);
-
-  const mappedOption = toArrayOption({
-    arrOfObj: options,
-    keyOfName: 'name',
-    keyOfId: 'wallet_id'
-  });
 
   const handleSelectOption = (id) => {
     dispatch(setTransactionTarget(id));
@@ -117,11 +101,13 @@ const Create = () => {
         <div className="flex justify-center">
           {query.slug === 'transfer' && (
             <Select
-              options={mappedOption}
-              onClick={(value) => handleSelectOption(value.wallet_id)}
+              options={toWalletList && toWalletList.wallets}
+              onClick={(value) => handleSelectOption(value.id)}
               value={
-                mappedOption.find((e) => e.id === transaction.to_wallet_id)
-                  ?.name
+                toWalletList &&
+                toWalletList.wallets.find(
+                  (wallet) => wallet.id === transaction.to_wallet_id
+                )?.name
               }
             />
           )}

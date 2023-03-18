@@ -28,7 +28,7 @@ const Notification = () => {
           <Card loading={loading} />
         </>
       )}
-      {notifications && !notifications.length ? (
+      {notifications && notifications.length ? (
         notifications.map((notif) => (
           <Card
             key={notif.created_at}
