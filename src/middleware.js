@@ -13,10 +13,13 @@ export default function middleware(request) {
 
   if (
     request.nextUrl.pathname === '/' ||
+    reqUrlIncludes('/detail') ||
     reqUrlIncludes('/home') ||
-    reqUrlIncludes('/notif') ||
+    reqUrlIncludes('/notification') ||
+    reqUrlIncludes('/setting') ||
     reqUrlIncludes('/stats') ||
-    reqUrlIncludes('/setting')
+    reqUrlIncludes('/transaction') ||
+    reqUrlIncludes('/create')
   ) {
     if (!currentSession) {
       return NextResponse.redirect(new URL('/login', request.url));
